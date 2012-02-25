@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Use a temp file, so if something goes wrong, old file is not clobbered
+cjconf-add /etc/cjdroute.conf /etc/cjdroute.conf.default > /tmp/cjdroute.conf
+mv /tmp/cjdroute.conf /etc/cjdroute.conf

@@ -1,0 +1,51 @@
+#!/bin/sh
+
+usage() {
+    echo "Usage: cjdrouted [start|stop|reconfigure|start-default|commands|tunnel|killtunnel]"
+}
+
+commands() {
+    cjdroute --getcmds < /etc/cjdroute.conf | sed "s/tun0/`cjdrouted tunnel`/g"
+}
+
+if [ "$1" = "start" ]; then
+    cjconf-make
+    cjdrouted commands | sh
+    sudo -u cjdns cjdroute < /etc/cjdroute.conf &
+    PID=$!
+    echo $PID > /var/run/cjdroute.pid
+elif [ "$1" = "stop" ]; then
+    kill `cat /var/run/cjdroute.pid`
+elif [ "$1" = "reconfigure" ]; then
+    cjdrouted stop
+    cjdrouted start
+elif [ "$1" = "start-default" ]; then
+    cjconf-make
+    cjconf-add-default
+    cjdrouted start
+elif [ "$1" = "commands" ]; then
+    commands
+elif [ "$1" = "tunnel" ]; then
+    # Return the name of the tunnel
+    if [ -e /tmp/cjdroute_tunnel ]; then
+        cat /tmp/cjdroute_tunnel
+    else
+        # Set up tunnel
+        if ! id cjdns; then
+          useradd cjdns
+        fi
+
+        /sbin/ip tuntap add mode tun user cjdns
+	USERNO=`id -u cjdns`
+        TUNID=`ip tuntap list | grep $USERNO | cut -f1 -d":"`
+	echo $TUNID > /tmp/cjdroute_tunnel
+	echo $TUNID
+    fi
+elif [ "$1" = "killtunnel" ]; then
+    # Remove the current tunnel
+    TUNID="`cjdrouted tunnel`"
+    echo "Killing tunnel $TUNID"
+    /sbin/ip tuntap del mode tun $TUNID
+else
+    usage
+fi

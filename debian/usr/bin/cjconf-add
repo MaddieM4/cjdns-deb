@@ -1,0 +1,112 @@
+#!/usr/bin/python
+
+# Removes comments and pretty-prints config
+# Can be used as a JSON validator, also
+
+import json
+import re
+import sys
+
+confpath = "/etc/cjdroute.conf"
+if len(sys.argv) > 1:
+	confpath = sys.argv[1]
+	print >> sys.stderr, "Editing "+confpath
+
+def load_conf(confpath):
+	try:
+		f = open(confpath)
+	except:
+		print >> sys.stderr, confpath, "does not exist, run cjconf-make first"
+		quit(1)
+
+	raw = f.read()
+	del f
+	# Filter out comments
+	raw = re.sub("(\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+)|(//.*)", "", raw)
+	raw = re.sub("//[^\n]*", "", raw)
+
+	# Convert to Python obj
+	try:
+		config = json.loads(raw, strict=False)
+	except:
+		print >> sys.stderr, confpath, "does not contain valid JSON."
+		quit(1)
+	return config
+
+config = load_conf(confpath)
+
+def save(obj):
+	with open(confpath, 'w') as f:
+		json.dump(obj, f, indent=4)
+
+def add(config):
+	ip = raw_input("IP address: ")
+	port = raw_input("Port: ")
+	password = raw_input("Password: ")
+	key = raw_input("Public Key: ")
+	trust = 10000
+	try:
+		trust = int(raw_input("Trust (leave blank for default): "))
+	except ValueError:
+		print "Using default trust (10000)"
+
+	confirm = raw_input("Add this peer? [Y|N]: ")
+	if confirm in ("Y", "y"):
+		new = {"password":password,
+			"authType":1,
+			"publicKey":key,
+			"trust":trust
+		}
+		addr = ip+":"+port
+		config['interfaces']['UDPInterface']['connectTo'][addr] = new
+		save(config)
+	return config
+
+def remove(config):
+	print "Remove a peer:"
+	peers = ["Leave 'em all alone"]
+	for p in config['interfaces']['UDPInterface']['connectTo']:
+		peers.append(p)
+	for p in range(len(peers)):
+		print "["+str(p)+"] "+peers[p]
+	try:
+		response = int(raw_input("Enter the number of the peer to remove: "))
+	except ValueError:
+		print "Ha ha, very funny."
+		return config
+	if (response >0 and response < len(peers)):
+		del config['interfaces']['UDPInterface']['connectTo'][peers[response]]
+		save(config)
+	else:
+		print "And no peers are decapitated today."
+	return config
+
+if len(sys.argv) == 3:
+	print >> sys.stderr, "Attempting to merge with", sys.argv[2]
+	source = load_conf(sys.argv[2])
+	for interface in source['interfaces']:
+		if not interface in config['interfaces']:
+			config['interfaces'][interface] = {}
+		config['interfaces'][interface]['bind'] = \
+			source['interfaces'][interface]['bind']
+		config['interfaces'][interface]['connectTo'].update(
+			source['interfaces'][interface]['connectTo'])
+	print json.dumps(config, indent = 4)
+	print >> sys.stderr, "Success!"
+	quit() # Done, successfully
+
+suicidal = False
+
+while not suicidal:
+	print "Current Peers:"
+	print json.dumps(config['interfaces']['UDPInterface']['connectTo'],
+		indent = 4)
+	response = raw_input("[A]dd a peer, [R]emove a peer, or [Q]uit? ")
+	if response == "Q":
+		suicidal = True
+	elif response == "A":
+		config = add(config)
+	elif response == "R":
+		config = remove(config)
+	else:
+		print "Unrecognized option"

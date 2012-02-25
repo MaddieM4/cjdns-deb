@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ -f /etc/cjdroute.conf ] && [ -s /etc/cjdroute.conf ]
+then
+    echo "/etc/cjdroute.conf already exists"
+else
+    echo "/etc/cjdroute.conf does not exist, making one"
+    cjdroute --genconf > /etc/cjdroute.conf
+fi

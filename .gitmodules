@@ -1,0 +1,3 @@
+[submodule "cjdns"]
+	path = cjdns
+	url = https://github.com/cjdelisle/cjdns

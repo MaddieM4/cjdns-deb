@@ -1,0 +1,38 @@
+#!/usr/bin/python
+
+# Removes comments and pretty-prints config
+# Can be used as a JSON validator, also
+
+import json
+import re
+import sys
+
+confpath = "/etc/cjdroute.conf"
+if len(sys.argv) > 1:
+	confpath = sys.argv[1]
+
+def load_conf(confpath):
+	try:
+		f = open(confpath)
+	except:
+		print >> sys.stderr, confpath, "does not exist, run cjconf-make first"
+		quit(1)
+
+	raw = f.read()
+	del f
+	# Filter out comments
+	raw = re.sub("(\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+)|(//.*)", "", raw)
+	raw = re.sub("//[^\n]*", "", raw)
+
+	# Convert to Python obj
+	try:
+		config = json.loads(raw, strict=False)
+	except:
+		print >> sys.stderr, confpath, "does not contain valid JSON."
+		quit(1)
+	return config
+
+config = load_conf(confpath)
+
+# Print out the result, prettily
+print json.dumps(config, indent=4)

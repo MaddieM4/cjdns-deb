@@ -1,0 +1,48 @@
+{
+    "interfaces": {
+        "UDPInterface": {
+            "connectTo": {
+
+              // orchard.crabdance.com, run by Philip Horger
+              "76.105.229.241:13982":{
+                "password": "general_public_1985",
+                "authType": 1,
+                "publicKey": "7pu8nlqphgd1bux9sdpjg0c104217r3b3m1bvmdtbn7uwcj5cky0.k",
+                "t,rust": 10000
+              },
+              
+              // fremont.noble, run by Derp
+              "173.255.219.67:10000":{
+                "password": "null",
+                "authType": 1,
+                "publicKey": "lj52930v1vmg3jqyb399us501svntt499bvgk0c1fud4pmy42gj0.k",
+                "trust": 10000
+              },
+              
+              // NL-HX, run by Waaghals
+              "37.34.49.56:61530":{
+                "password": "public-expires-may-ghsfYATSvjh65SFgd",
+                "authType": 1,
+                "publicKey": "jcvn5bvvfkxt3pmhj8bqzm6y20unc7cd5vuyhg01tmbh7bvswqq0.k",
+                "trust": 10000
+              }
+            }, 
+
+            "bind": "0.0.0.0:30871"
+        }
+    }, 
+    "resetAfterInactivitySeconds": 30, 
+    "version": 1, 
+    "router": {
+        "interface": {
+            "type": "TUNInterface", 
+            "tunDevice": "tun0"
+        }
+    }, 
+    "security": [
+        "nofiles", 
+        {
+            "setuser": "nobody"
+        }
+    ]
+}
