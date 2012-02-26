@@ -1,0 +1,70 @@
+CJDROUTED(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjdrouted - Daemon control over cjdroute.
+
+
+SYNOPSIS
+--------
+*cjdrouted* [start|stop|reconfigure|start-default|commands|tunnel|killtunnel]
+
+
+DESCRIPTION
+-----------
+The cjdrouted(1) command provides shortcuts for manipulating the cjdroute
+process, as well as creating and destroying tunnel devices.
+
+
+SUBCOMMANDS
+-----------
+*start*::
+    Make sure /etc/cjdroute.conf exists, use it to run cjdroute, and
+    write the process id to /var/run/cjdroute.pid.
+
+*stop*::
+    Kill the daemon process whose pid is in /var/run/cjdroute.pid.
+
+*reconfigure*::
+    Shortcut alias for 'cjdrouted stop && cjdrouted start'.
+
+*start-default*::
+    Merges default peers into config before calling 'cjdrouted start'.
+
+*commands*::
+    Commands that need to be run to "activate" a tunnel device. The output
+    of "cjdroute --getcmds" with the default conf, and the device find/replaced
+    with the result of 'cjdrouted tunnel'.
+
+*tunnel*::
+    Create a tunnel device if none is set up, storing the name in /tmp/cjdroute_tunnel.
+
+*killtunnel*::
+    Remove the tunnel named in /tmp/cjdroute_tunnel.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjdrouted was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+

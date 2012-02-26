@@ -1,0 +1,72 @@
+CJCONF-ADD(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjconf-add - manipulates peer information in cjdroute configs.
+
+
+SYNOPSIS
+--------
+*cjconf-add* [ conf_file ] [ merge_source ]
+
+
+DESCRIPTION
+-----------
+cjconf-add(1) has two modes: interactive, and merge. With 0 or 1 arguments,
+it uses interactive mode, letting you add, update, and remove peers over the
+command line (using /etc/cjdroute.conf as the default conf file to edit if it's
+not given).
+
+Supplying 2 arguments will go into merge mode, where a composite config is created,
+using the main config as a base and adding in all the peers from the merge_source
+file. This means it retains all the other options in the original file. Unlike
+in interactive mode, where your meddling is saved for you every time you make a
+change, merge mode spits out the resulting JSON of the merge to STDOUT.
+
+
+EXAMPLES
+--------
+*cjconf-add*::
+    Interactively edits /etc/cjdroute.conf.
+
+*cjconf-add* myconf::
+    Interactively edits myconf, which resides in the working directory.
+
+*cjconf-add* /etc/cjdroute.conf /etc/cjdroute.conf.default > /etc/cjdroute.conf::
+    This is the source code to cjconf-add-default. No, really. It creates a
+    composite config using the peers in /etc/cjdroute.conf.default (a set of
+    public peers included in the cjdns package) and the current config, retaining
+    the settings and peers of the original, and writes the output back to the main
+    config file.
+
+    CAUTION: It's important to note that in the actual cjconf-add-default, a temporary
+    intermediate file is used, because otherwise the shell erases /etc/cjdroute.conf
+    before it starts reading it into cjconf-add. In other words, DO NOT TRY THIS AT HOME.
+    Always use a temp file in between if you're overwriting the original.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-add was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+
