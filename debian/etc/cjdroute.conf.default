@@ -8,7 +8,7 @@
                 "password": "general_public_1985",
                 "authType": 1,
                 "publicKey": "7pu8nlqphgd1bux9sdpjg0c104217r3b3m1bvmdtbn7uwcj5cky0.k",
-                "t,rust": 10000
+                "trust": 10000
               },
               
               // fremont.noble, run by Derp
