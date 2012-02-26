@@ -11,3 +11,4 @@ sed "s/VERSION/Version: $VERSION/" < control_template > debian/DEBIAN/control
 # Update package
 cp cjdns/build/cjdroute debian/usr/bin
 fakeroot dpkg-deb --build debian
+mv debian.deb cjdns.deb
