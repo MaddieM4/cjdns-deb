@@ -5,9 +5,9 @@ RELEASE="`cat release`"
 RELEASE=$(( $RELEASE + 1 ))
 echo $RELEASE > release
 
-# Update package
-cp /home/rfx/cjd/cjdns/build/cjdroute /home/rfx/cjd/debian/usr/bin
-fakeroot dpkg-deb --build debian
+VERSION="0.3-$RELEASE"
+sed "s/VERSION/Version: $VERSION/" < control_template > debian/DEBIAN/control
 
-# Copy package to public folder
-sudo cp debian.deb ../cjbuntu/cjdns.deb
+# Update package
+cp cjdns/build/cjdroute debian/usr/bin
+fakeroot dpkg-deb --build debian
