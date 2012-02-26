@@ -4,7 +4,7 @@ Architecture: i386
 Section: web
 Maintainer: Philip Horger <campadrenalin@gmail.com>
 Homepage: https://github.com/cjdelisle/cjdns
-Depends: libevent2.0.17
+Depends: libevent2.0.17, sh, sed, grep, python, libc
 Suggests: cjdnsify
 Description: An encrypted overlay network that uses existing internet
 	infrastructure to provide IPv6 connectivity and mesh routing.
