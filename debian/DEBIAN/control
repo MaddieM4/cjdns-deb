@@ -1,10 +1,10 @@
 Package: cjdns
-Version: 0.3-8
+Version: 0.3-9
 Architecture: i386
 Section: web
 Maintainer: Philip Horger <campadrenalin@gmail.com>
 Homepage: https://github.com/cjdelisle/cjdns
-Depends: libevent2.0.17, sh, sed, grep, python, libc
+Depends: libevent2.0.17, bash, sed, grep, python, libc6
 Suggests: cjdnsify
 Description: An encrypted overlay network that uses existing internet
 	infrastructure to provide IPv6 connectivity and mesh routing.
