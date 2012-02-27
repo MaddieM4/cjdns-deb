@@ -1,5 +1,5 @@
 Package: cjdns
-Version: 0.3-10
+Version: 0.3-11
 Architecture: i386
 Section: web
 Maintainer: Philip Horger <campadrenalin@gmail.com>
