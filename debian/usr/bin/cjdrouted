@@ -11,7 +11,8 @@ commands() {
 if [ "$1" = "start" ]; then
     cjconf-make
     cjdrouted commands | sh
-    sudo -u cjdns cjdroute < /etc/cjdroute.conf &
+    mkdir -p /var/log/cjdnsj
+    sudo -u cjdns cjdroute < /etc/cjdroute.conf > /var/log/cjdns/cjdroute.log &
     PID=$!
     echo $PID > /var/run/cjdroute.pid
 elif [ "$1" = "stop" ]; then
