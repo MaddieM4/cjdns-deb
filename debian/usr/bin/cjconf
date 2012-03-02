@@ -1,0 +1,15 @@
+#!/bin/sh
+
+usage() {
+    echo "Usage: cjconf [make|print|add|add-default|get|set] [ ARGUMENTS ]"
+}
+
+if [ $# -lt 1 ]; then
+   usage
+   exit
+fi
+
+subcommand="$1"
+shift
+
+echo "cjconf-$subcommand $@" | sh

@@ -1,0 +1,48 @@
+#!/usr/bin/python
+
+import json
+import re
+import sys
+
+confpath = "/etc/cjdroute.conf"
+if "-f" in sys.argv:
+	f = sys.argv.index("-f")
+	if f+1 < len(sys.argv):
+		confpath = sys.argv[f+1]
+		del sys.argv[f+1]
+		del sys.argv[f]
+	else:
+		print >> sys.stderr, "-f option must give a filename"
+		quit(1)
+
+def load_conf(confpath):
+	try:
+		f = open(confpath)
+	except:
+		print >> sys.stderr, confpath, "does not exist, run cjconf-make first"
+		quit(1)
+
+	raw = f.read()
+	del f
+	# Filter out comments
+	raw = re.sub("(\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+)|(//.*)", "", raw)
+	raw = re.sub("//[^\n]*", "", raw)
+
+	# Convert to Python obj
+	try:
+		config = json.loads(raw, strict=False)
+	except:
+		print >> sys.stderr, confpath, "does not contain valid JSON."
+		quit(1)
+	return config
+
+config = load_conf(confpath)
+
+chain = sys.argv[1:]
+resolved = config
+for i in chain:
+	resolved = resolved[i]
+if type(resolved) in (str, int, unicode):
+	print resolved
+else:
+	print json.dumps(resolved, indent=4)
