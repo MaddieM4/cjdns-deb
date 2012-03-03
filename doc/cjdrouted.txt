@@ -10,7 +10,7 @@ cjdrouted - Daemon control over cjdroute.
 
 SYNOPSIS
 --------
-*cjdrouted* [start|stop|reconfigure|start-default|commands|tunnel|killtunnel]
+*cjdrouted* [start|stop|reconfigure|start-default|killtunnel]
 
 
 DESCRIPTION
@@ -23,10 +23,15 @@ SUBCOMMANDS
 -----------
 *start*::
     Make sure /etc/cjdroute.conf exists, use it to run cjdroute, and
-    write the process id to /var/run/cjdroute.pid.
+    log it all to both log locations using cjdlog.
 
 *stop*::
-    Kill the daemon process whose pid is in /var/run/cjdroute.pid.
+    Kill the daemon process. Simply a call to `killall cjdroute`, so if
+    you're one of those brave/strange people who want to run multiple
+    instances on the same OS... yet another reason cjdrouted will not
+    get along with your multi-noding fringe behavior. Don't get me wrong,
+    though, you can do this in VMs just fine, but on the same OS, you're
+    gonna have to get manual.
 
 *reconfigure*::
     Shortcut alias for 'cjdrouted stop && cjdrouted start'.
@@ -34,16 +39,8 @@ SUBCOMMANDS
 *start-default*::
     Merges default peers into config before calling 'cjdrouted start'.
 
-*commands*::
-    Commands that need to be run to "activate" a tunnel device. The output
-    of "cjdroute --getcmds" with the default conf, and the device find/replaced
-    with the result of 'cjdrouted tunnel'.
-
-*tunnel*::
-    Create a tunnel device if none is set up, storing the name in /tmp/cjdroute_tunnel.
-
 *killtunnel*::
-    Remove the tunnel named in /tmp/cjdroute_tunnel.
+    Remove the tunnel named by `cjdinfo tunnel`
 
 
 BUGS

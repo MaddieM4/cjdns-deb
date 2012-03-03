@@ -1,0 +1,75 @@
+CJDLOG(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjdlog - Information about your cjdroute setup and instance.
+
+
+SYNOPSIS
+--------
+*cjdlog* [make|clear|clear-old|clear-new|watch]
+
+
+DESCRIPTION
+-----------
+cjdlog(1) is a parallel logging utility, so that cjdroute output
+can be duplicated in two places: a "current process" log at
+/var/log/cjdns/cjdroute.current.log, and an all-time log at
+/var/log/cjdns/cjdroute.log. 
+
+
+EXAMPLES
+--------
+*cjdlog*::
+    Logs stdin to both log files in parallel. You must be user
+    cjdns or root. In general, this is called by cjdrouted, and
+    not something you have to worry about. If you are starting
+    cjdrouted manually, pipe it into cjdlog, redirecting output
+    with 2>&1 before the pipe symbol.
+
+*cjdlog* make::
+    Create the folder, ensure log files exist (even if just blanks)
+    and change file ownership to owner cjdns. May be necessary to
+    call before attempting to log any data.
+
+*cjdlog* clear::
+    Clear both log files.
+
+*cjdlog* clear-old::
+    Clear the all-time log file at /var/log/cjdns/cjdroute.log.
+
+*cjdlog* clear-new::
+    Clear the current-process log file at /var/log/cjdns/cjdroute.current.log.
+
+*cjdlog* watch::
+    Write out log file data as it's written. Internally it's just a tail -f. Note that
+    thanks to the nature of buffers and flushing, this data may come in bits and pieces,
+    and look like it's cutting out in the middle of lines. This is irritating but to be
+    expected.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjdlog was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+

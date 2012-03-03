@@ -1,0 +1,52 @@
+CJCONF-REMOVE(1)
+================
+:doctype: manpage
+
+
+NAME
+----
+cjconf-remove - Deletes your config file entirely.
+
+
+SYNOPSIS
+--------
+*cjconf-remove*
+
+
+DESCRIPTION
+-----------
+cjconf-remove(1) is an alias for "rm /etc/cjdroute.conf".
+
+It doesn't take any arguments.
+
+
+EXAMPLES
+--------
+*cjconf-remove*::
+    Permanently deletes the config file at /etc/cjdroute.conf if it exists.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-remove was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+
+
+

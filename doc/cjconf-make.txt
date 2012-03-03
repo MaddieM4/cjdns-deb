@@ -1,0 +1,53 @@
+CJCONF-MAKE(1)
+==============
+:doctype: manpage
+
+
+NAME
+----
+cjconf-make - Generate a cjdroute conf if none exists.
+
+
+SYNOPSIS
+--------
+*cjconf-make*
+
+
+DESCRIPTION
+-----------
+cjconf-make(1) checks whether a file with a length greater than
+zero exists at /etc/cjdroute.conf. If not, it uses cjdroute to 
+create one. It takes no arguments, and is very simple.
+
+If your config is messed up or you want a new one, you delete the
+old file with cjconf-remove(1) and then re-run cjconf-make.
+
+EXAMPLES
+--------
+*cjconf-make*::
+    Builds a new config at /etc/cjdroute.conf if none exists, or
+    the file is empty.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-make was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+

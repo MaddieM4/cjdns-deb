@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: cjdrouted
+.\"     Title: cjconf-remove
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: 03/03/2012
@@ -7,7 +7,7 @@
 .\"    Source: \ \&
 .\"  Language: English
 .\"
-.TH "CJDROUTED" "1" "03/03/2012" "\ \&" "\ \&"
+.TH "CJCONF\-REMOVE" "1" "03/03/2012" "\ \&" "\ \&"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,49 +28,27 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-cjdrouted \- Daemon control over cjdroute\&.
+cjconf-remove \- Deletes your config file entirely\&.
 .SH "SYNOPSIS"
 .sp
-\fBcjdrouted\fR [start|stop|reconfigure|start\-default|killtunnel]
+\fBcjconf\-remove\fR
 .SH "DESCRIPTION"
 .sp
-The cjdrouted(1) command provides shortcuts for manipulating the cjdroute process, as well as creating and destroying tunnel devices\&.
-.SH "SUBCOMMANDS"
+cjconf\-remove(1) is an alias for "rm /etc/cjdroute\&.conf"\&.
+.sp
+It doesn\(cqt take any arguments\&.
+.SH "EXAMPLES"
 .PP
-\fBstart\fR
+\fBcjconf\-remove\fR
 .RS 4
-Make sure /etc/cjdroute\&.conf exists, use it to run cjdroute, and log it all to both log locations using cjdlog\&.
-.RE
-.PP
-\fBstop\fR
-.RS 4
-Kill the daemon process\&. Simply a call to
-killall cjdroute, so if you\(cqre one of those brave/strange people who want to run multiple instances on the same OS\&... yet another reason cjdrouted will not get along with your multi\-noding fringe behavior\&. Don\(cqt get me wrong, though, you can do this in VMs just fine, but on the same OS, you\(cqre gonna have to get manual\&.
-.RE
-.PP
-\fBreconfigure\fR
-.RS 4
-Shortcut alias for
-\fIcjdrouted stop && cjdrouted start\fR\&.
-.RE
-.PP
-\fBstart\-default\fR
-.RS 4
-Merges default peers into config before calling
-\fIcjdrouted start\fR\&.
-.RE
-.PP
-\fBkilltunnel\fR
-.RS 4
-Remove the tunnel named by
-cjdinfo tunnel
+Permanently deletes the config file at /etc/cjdroute\&.conf if it exists\&.
 .RE
 .SH "BUGS"
 .sp
 See https://github\&.com/campadrenalin/cjdns\-deb/issues
 .SH "AUTHOR"
 .sp
-cjdrouted was written by Philip Horger in 2012\&. cjdroute was written by Caleb Delisle\&.
+cjconf\-remove was written by Philip Horger in 2012\&. cjdroute was written by Caleb Delisle\&.
 .SH "RESOURCES"
 .sp
 Github: https://github\&.com/campadrenalin/cjdns\-deb/

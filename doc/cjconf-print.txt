@@ -1,0 +1,55 @@
+CJCONF-PRINT(1)
+===============
+:doctype: manpage
+
+
+NAME
+----
+cjconf-print - Pretty prints your config.
+
+
+SYNOPSIS
+--------
+*cjconf-print* [ path ]
+
+
+DESCRIPTION
+-----------
+cjconf-print(1) prints out a JSON document in full. It takes
+a single "path" argument for a file location, but when omitted,
+it assumes the path to be /etc/cjdroute.conf.
+
+
+EXAMPLES
+--------
+*cjconf-print*::
+    Prints the cleaned-up JSON of your config without comments.
+    Loads from /etc/cjdroute.conf.
+
+*cjconf-print* /path/to/some/file::
+    Same as above, but loads the file at /path/to/some/file.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-print was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+
+

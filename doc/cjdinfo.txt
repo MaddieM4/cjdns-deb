@@ -1,0 +1,70 @@
+CJDINFO(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjdinfo - Information about your cjdroute setup and instance.
+
+
+SYNOPSIS
+--------
+*cjdinfo* [commands|tunnel|address|key]
+
+
+DESCRIPTION
+-----------
+The cjdinfo(1) command is useful for finding out the key details
+of your cjdroute instance and setup. It was born out of a need
+to move functionality out of cjdroute for simplicity, and have a
+place to add informative more informative subcommands as the author
+saw fit.
+
+
+SUBCOMMANDS
+-----------
+*commands*::
+    The commands that need to be run to connect the tunnel device
+    to the network interface, and allow cjdroute to provide that
+    service. Used by (and formerly, in) cjdrouted.
+
+*tunnel*::
+    Create a tunnel if no appropriately configured one exists, and
+    return its name. Useful in scripts. Also a cjdrouted refugee.
+
+*address*::
+    The IPv6 address of your cjdroute instance. Currently it requires
+    you to be running, or have run, cjdroute through cjdrouted. That's
+    because it determines your address based on the logs. However, at
+    some point in the future this will be changed to be based on the
+    result of "cjdinfo commands".
+
+*key*::
+    The public key of your cjdroute instance. Like the address subcommand,
+    it is log-based, and requires log information in /var/log/cjdns/cjdrouted.current.log.
+    Unlike the address subcommand, this is impossible to fix.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjdinfo was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+

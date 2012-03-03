@@ -1,0 +1,52 @@
+CJCONF-ADD-DEFAULT(1)
+=====================
+:doctype: manpage
+
+
+NAME
+----
+cjconf-add-default - Merge default peers into default config.
+
+
+SYNOPSIS
+--------
+*cjconf-add-default*
+
+
+DESCRIPTION
+-----------
+cjconf-add-default(1) merges a set of default peers stored in
+/etc/cjdroute.conf.default, into your primary config at
+/etc/cjdroute.conf. It takes no arguments, and is very simple.
+You can view its source code as an example of how to merge
+configs in other locations.
+
+
+EXAMPLES
+--------
+*cjconf-add-default*::
+    Merge peers at /etc/cjdroute.conf.default into /etc/cjdroute.conf.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-add-default was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+
