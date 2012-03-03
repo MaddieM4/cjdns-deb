@@ -47,6 +47,15 @@
                 "authType": 1,
                 "publicKey": "wx0vn0dl2p5dpv0mmu2k7hr78pz87vnfn3px31fd4p7txjh7ycz0.k",
                 "trust": 10000
+              },
+
+              // Grey's Node, run by Grey
+              // Germany (details unknown)
+              "199.180.252.227:19081":{
+                "password": "public_7h4yTNEnRSEUvfFLtsM3",
+                "authType": 1,
+                "publicKey": "z5htnv9jsj85b64cf61lbnl3dmqk5lpv3vxtz9g1jqlvb3b30b90.k",
+                "trust": 10000
               }
             }, 
 
