@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "$1" == "make" ]; then
+    mkdir -p /var/log/cjdns
+    cd /var/log/cjdns
+
+    touch cjdroute.log cjdroute.current.log
+    chown cjdns cjdroute*.log
+else
+    cat > cjdroute.current.log
+    cat cjdroute.current.log >> cjdroute.log
+fi
