@@ -14,6 +14,8 @@ elif [ "$1" = "clear-old" ]; then
 elif [ "$1" = "clear-new" ]; then
     cd /var/log/cjdns
     echo > cjdroute.current.log
+elif [ "$1" = "watch" ]; then
+    tail -f /var/log/cjdns/cjdroute.log
 else
     # Actually log stuff from stdin
     cd /var/log/cjdns
