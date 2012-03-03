@@ -11,16 +11,19 @@ commands() {
 }
 
 getexistingtunnel() {
-	USERNO=`id -u cjdns`
-        TUNID=`ip tuntap list | grep $USERNO | head -n 1 | cut -f1 -d":"`
+	USERNO="`id -u cjdns`"
+        TUNID="`ip tuntap list | grep $USERNO | head -n 1 | cut -f1 -d":"`"
 	echo $TUNID
 }
 
 if [ "$1" = "start" ]; then
     cjconf-make
     cjdrouted commands | sh
-    mkdir -p /var/log/cjdnsj
-    sudo -u cjdns cjdroute < /etc/cjdroute.conf > /var/log/cjdns/cjdroute.log &
+    mkdir -p /var/log/cjdns
+    touch /var/log/cjdns/cjdroute.log
+    chown cjdns /var/log/cjdns/cjdroute.log
+    sudo su cjdns -c \
+      "cjdroute < /etc/cjdroute.conf >> /var/log/cjdns/cjdroute.log &"
 elif [ "$1" = "stop" ]; then
     killall cjdroute
 elif [ "$1" = "reconfigure" ]; then
@@ -34,18 +37,18 @@ elif [ "$1" = "commands" ]; then
     commands
 elif [ "$1" = "tunnel" ]; then
     # Return the name of the tunnel
-    TUNID= getexistingtunnel
+    TUNID="`getexistingtunnel`"
     if [ "$TUNID" != "" ]; then
         echo $TUNID
     else
         # Set up tunnel
-        if ! id cjdns; then
+        if ! id cjdns > /dev/null; then
           useradd cjdns
         fi
 
         /sbin/ip tuntap add mode tun user cjdns
 
-        getexistingtunnel
+        echo "`getexistingtunnel`"
     fi
 elif [ "$1" = "killtunnel" ]; then
     # Remove the current tunnel
