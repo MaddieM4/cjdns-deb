@@ -4,7 +4,14 @@ import json
 import re
 import sys
 
+def usage(warning):
+	print >> sys.stderr, "Usage: cjconf-get [-n] [ -f conf_file ] [ INDEXES ]"
+	if warning:
+		print >> sys.stderr, warning
+	quit(1)
+
 confpath = "/etc/cjdroute.conf"
+only_names = False
 if "-f" in sys.argv:
 	f = sys.argv.index("-f")
 	if f+1 < len(sys.argv):
@@ -12,15 +19,17 @@ if "-f" in sys.argv:
 		del sys.argv[f+1]
 		del sys.argv[f]
 	else:
-		print >> sys.stderr, "-f option must give a filename"
-		quit(1)
+		usage("-f option must give a filename")
+
+if "-n" in sys.argv:
+	sys.argv.remove("-n")
+	only_names = True
 
 def load_conf(confpath):
 	try:
 		f = open(confpath)
 	except:
-		print >> sys.stderr, confpath, "does not exist, run cjconf-make first"
-		quit(1)
+		usage(str(confpath)+"does not exist, run cjconf-make first")
 
 	raw = f.read()
 	del f
@@ -32,8 +41,7 @@ def load_conf(confpath):
 	try:
 		config = json.loads(raw, strict=False)
 	except:
-		print >> sys.stderr, confpath, "does not contain valid JSON."
-		quit(1)
+		usage(str(confpath)+"does not contain valid JSON.")
 	return config
 
 config = load_conf(confpath)
@@ -41,8 +49,17 @@ config = load_conf(confpath)
 chain = sys.argv[1:]
 resolved = config
 for i in chain:
+	if type(resolved) ==list:
+		i = int(i)
 	resolved = resolved[i]
 if type(resolved) in (str, int, unicode):
 	print resolved
 else:
-	print json.dumps(resolved, indent=4)
+	if only_names:
+		if type(resolved)==list:
+			print "[ Array of length "+str(len(resolved))+"]"
+		else:
+			for x in resolved:
+				print x
+	else:
+		print json.dumps(resolved, indent=4)

@@ -1,0 +1,94 @@
+CJCONF-SET(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjconf-set - modifies the JSON of a config file.
+
+
+SYNOPSIS
+--------
+*cjconf-set* [-i] [ -f conf_file ] [ INDEXES ] [ name ] value
+
+
+DESCRIPTION
+-----------
+cjconf-set(1) is a lot like cjconf-get(1), except it allows you set values in
+the JSON structure. Until the last one, each argument takes you a layer deeper
+into the heirarchy structure, with the last value as a payload.
+
+It does not recursively create structure where none exists. For example, trying
+to set config["a"]["b"]["c"] will succeed if both "a" and "b" exist, and fail
+otherwise. To create deeper structures, the easiest and cleanest way is to use
+multiple commands, for example,
+
+  cjconf-set a {}
+  cjconf-set a b {}
+  cjconf-set a b c "Success!"
+
+Note that you may need to use 'single-quotes' on JSON structures to get your 
+shell to pass them on unmangled to cjconf-set. For example, the exclamation
+point in "Success!" in the above example would definitely cause bash to choke,
+because of its irritating assumption that you're trying to do history completion.
+Single quotes are a very good literalizer, although it illustrates exactly why
+complex JSON structures should be inserted piece by piece, for the sake of your
+sanity. Imagine trying to debug the problems in a command that inserts a 5-layer-deep
+JSON object at once, full of string literals - not my idea of fun.
+
+There are two special values you can provide, otherwise it will try to parse it with
+a JSON parser, then as an int, and finally falling back to interpreting it as a string
+should neither of those work. "==del" will delete existing inforation at the specified
+location, and "-" will signal cjconf-set to read the contents of stdin as the source,
+allowing for exactly the kind of complex config insertion that takes multiple commands
+normally.
+
+
+EXAMPLES
+--------
+*cjconf-set* version 2 -f myconf::
+    Sets config["version"] to 2. Does not recursively descend at all. The edit affects
+    the file in location "myconf" instead of the default, /etc/cjdroute.conf.
+
+*cjconf-set* router interface tunDevice vwlan1::
+    Sets config["router"]["interface"]["tunDevice"] to "vwlan1" instead of the
+    default, "tun0".
+
+*cjconf-set* security 0 ==del::
+    This shows off two interesting syntax things. One, you can use ints as indexes for
+    arrays, like config["security"] is. The other thing is that if you pass "==del" as
+    the value, it will delete that thing. This command is equivalent to
+    'del config["security"][0]'.
+
+*cjconf-set* -i security 0 nofiles::
+    The -i option stands for insert. Normally when working with arrays, you overwrite
+    existing values. Insert means, stick the value in there such that its index is
+    (the given index). This command undoes the results of the previous command, by
+    sticking the string "nofiles" at the beginning of config["security"]. Using ==del
+    with the insert option will cause an error. The insert option has no effect on
+    JSON mappings (the things in {} braces), it just works like normal.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-set was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+

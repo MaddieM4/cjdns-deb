@@ -4,7 +4,14 @@ import json
 import re
 import sys
 
+def usage(warning):
+	print >> sys.stderr, "Usage: cjconf-set [-i] [ -f conf_file ] [ INDEXES ] [ name ] value"
+	if warning:
+		print >> sys.stderr, warning
+	quit(1)
+
 confpath = "/etc/cjdroute.conf"
+insert = False
 if "-f" in sys.argv:
 	f = sys.argv.index("-f")
 	if f+1 < len(sys.argv):
@@ -12,15 +19,16 @@ if "-f" in sys.argv:
 		del sys.argv[f+1]
 		del sys.argv[f]
 	else:
-		print >> sys.stderr, "-f option must give a filename"
-		quit(1)
+		usage("-f option must give a filename")
+if "-i" in sys.argv:
+	sys.argv.remove("-i")
+	insert = True
 
 def load_conf(confpath):
 	try:
 		f = open(confpath)
 	except:
-		print >> sys.stderr, confpath, "does not exist, run cjconf-make first"
-		quit(1)
+		usage(str(confpath)+" does not exist, run cjconf-make first")
 
 	raw = f.read()
 	del f
@@ -32,19 +40,29 @@ def load_conf(confpath):
 	try:
 		config = json.loads(raw, strict=False)
 	except:
-		print >> sys.stderr, confpath, "does not contain valid JSON."
-		quit(1)
+		usage(str(confpath)+" does not contain valid JSON.")
 	return config
 
 def save(obj):
 	with open(confpath, 'w') as f:
 		json.dump(obj, f, indent=4)
 
-config = load_conf(confpath)
+config = {}
 
-chain = sys.argv[1:-2]
-name  = sys.argv[-2]
-value = sys.argv[-1]
+if len(sys.argv) < 2:
+	usage("Not enough arguments.")
+if len(sys.argv) == 2:
+	chain = []
+	name  = "stuff"
+	value = sys.argv[-1]
+else:
+	config = load_conf(confpath)
+	chain = sys.argv[1:-2]
+	name  = sys.argv[-2]
+	value = sys.argv[-1]
+
+if value == "-":
+	value = sys.stdin.read().strip()
 
 try:
 	value = json.loads(value)
@@ -56,12 +74,34 @@ except:
 
 resolved = config
 for i in chain:
+	if type(resolved) ==list:
+		i = int(i)
 	resolved = resolved[i]
 
-if value == "==del":
-	del resolved[name]
+if type(resolved) ==list:
+	name = int(name)
+
+if insert:
+	if value == "==del":
+		usage("Cannot use ==del when inserting")
+	else:
+		if type(resolved) == list:
+			resolved.insert(name, value)
+		else:
+			resolved[name] = value
 else:
-	resolved[name] = value
-print " >> ".join(chain)
+	if value == "==del":
+		del resolved[name]
+	else:
+		resolved[name] = value
+
+if len(sys.argv) ==2:
+	config = config['stuff']
+	resolved = config
+
+if len(chain) > 0:
+	print " >> ".join(chain)
+else:
+	print "(Top Level)"
 print json.dumps(resolved, indent=4)
 save(config)

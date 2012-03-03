@@ -1,0 +1,67 @@
+CJCONF-GET(1)
+===========
+:doctype: manpage
+
+
+NAME
+----
+cjconf-get - retrieves information from a cjdroute config.
+
+
+SYNOPSIS
+--------
+*cjconf-get* [-n] [ -f conf_file ] [ INDEXES ]
+
+
+DESCRIPTION
+-----------
+cjconf-get(1) is a great way to base scripting on cjdns configs. It parses the
+JSON recursively, with each index given in the arguments steering it one level
+of heirarchy deeper.
+
+To limit output, try the -n option. For dicts, it prints only the keys. For arrays,
+it prints out the length. For anything else it just prints it normally.
+
+EXAMPLES
+--------
+*cjconf-get*::
+    Since it assumes the conf is at /etc/cjdroute.conf when not otherwise specified,
+    this is equivalent to cjconf-print.
+
+*cjconf-get* -n::
+    Prints out the name of every property in the top level of the config.
+
+*cjconf-get* -f myconf::
+    Prints the entirety of the JSON at the location "myconf". Again, without using
+    indexes, this is very much like the more basic cjconf-print. Because the "-f filename"
+    tuple is removed from the argument list during processing, it can occur at any time within
+    the arguments, provided it only occurs once.
+
+*cjconf-get* router interface::
+    Prints the contents of config["router"]["interface"]. If this is a string or int,
+    it will be printed out directly, with no JSON formatting. Otherwise, it's pretty-printed
+    with an indent width of 4 spaces, like usual.
+
+
+BUGS
+----
+See <https://github.com/campadrenalin/cjdns-deb/issues>
+
+
+AUTHOR
+------
+cjconf-get was written by Philip Horger in 2012.
+cjdroute was written by Caleb Delisle.
+
+
+RESOURCES
+---------
+Github: <https://github.com/campadrenalin/cjdns-deb/>
+
+
+COPYING
+-------
+Copyright \(C) 2012 Philip Horger. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).
+
+
