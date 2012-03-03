@@ -10,7 +10,7 @@ nodata() {
 
 commands() {
     # Warning: updates your config
-    cjconf-set router interface tunDevice "`cjdrouted tunnel`" > /dev/null
+    cjconf-set router interface tunDevice "`cjdinfo tunnel`" > /dev/null
     cjdroute --getcmds < /etc/cjdroute.conf
 }
 
