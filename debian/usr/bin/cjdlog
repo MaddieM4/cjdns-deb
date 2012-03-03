@@ -17,6 +17,6 @@ elif [ "$1" = "clear-new" ]; then
 else
     # Actually log stuff from stdin
     cd /var/log/cjdns
-    cat > cjdroute.current.log &
-    tail -f cjdroute.current.log >> cjdroute.log
+    tail -f --pid=$$ cjdroute.current.log >> cjdroute.log &
+    cat > cjdroute.current.log
 fi

@@ -8,8 +8,9 @@ if [ "$1" = "start" ]; then
     cjconf-make
     cjdinfo commands | sh
     cjdlog make
+    echo "Starting cjdroute..."
     sudo su cjdns -c \
-      "cjdroute < /etc/cjdroute.conf | cjdlog &"
+      "cjdroute < /etc/cjdroute.conf 2>&1 | cjdlog &"
 elif [ "$1" = "stop" ]; then
     killall cjdroute
 elif [ "$1" = "reconfigure" ]; then
