@@ -6,7 +6,17 @@ if [ "$1" == "make" ]; then
 
     touch cjdroute.log cjdroute.current.log
     chown cjdns cjdroute*.log
+elif [ "$1" = "clear" ]; then
+    cjdlog clear-old && cjdlog clear-new
+elif [ "$1" = "clear-old" ]; then
+    cd /var/log/cjdns
+    echo > cjdroute.log
+elif [ "$1" = "clear-new" ]; then
+    cd /var/log/cjdns
+    echo > cjdroute.current.log
 else
+    # Actually log stuff from stdin
+    cd /var/log/cjdns
     cat > cjdroute.current.log
     cat cjdroute.current.log >> cjdroute.log
 fi
