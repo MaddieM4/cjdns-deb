@@ -1,0 +1,7 @@
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+# Start daemon on reboot
+@reboot cjdroute continuous go
+
+# Make sure it's working every 5 minutes
+0-59/5 * * * * cjdroute continuous go
