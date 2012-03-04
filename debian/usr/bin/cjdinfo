@@ -1,7 +1,7 @@
 #!/bin/sh
 
 usage() {
-    echo "Usage: cjdinfo [commands|tunnel|address|key]"
+    echo "Usage: cjdinfo [commands|tunnel|address|key|up]"
 }
 
 nodata() {
@@ -50,5 +50,13 @@ elif [ "$1" = "key" ]; then
         echo "$KEY"
     else
         echo "You have to run cjdroute at least once for this data to be available"
+    fi
+elif [ "$1" = "up" ]; then
+    PG="`pgrep cjdroute`"
+    if [ "$PG" != "" ]; then
+        echo "True"
+    else
+        echo "False"
+        return 1
     fi
 fi

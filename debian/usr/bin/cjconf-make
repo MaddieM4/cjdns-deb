@@ -7,4 +7,5 @@ then
 else
     echo "/etc/cjdroute.conf does not exist, making one"
     cjdroute --genconf > /etc/cjdroute.conf
+    cjconf-set continuous false
 fi
