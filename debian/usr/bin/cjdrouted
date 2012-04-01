@@ -28,16 +28,16 @@ elif [ "$1" = "start-default" ]; then
 elif [ "$1" = "continuous" ]; then
     if [ "$2" = "on" ]; then
       cjconf-make
-      cjconf-set continuous true
+      cjconf-set continuous true > /dev/null
       cjdrouted continuous go
     elif [ "$2" = "off" ]; then
-      cjconf-set continuous false
+      cjconf-set continuous false > /dev/null
     elif [ "$2" = "state" ]; then
       if [ "`cjconf-get continuous`" = "true" ]; then
         echo "on"
       else
         echo "off"
-        cjconf-set continuous false
+        cjconf-set continuous false > /dev/null
       fi
     elif [ "$2" = "go" ]; then
       if [ "`cjdrouted continous state`" = "on" ]; then
