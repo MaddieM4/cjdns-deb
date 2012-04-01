@@ -26,6 +26,8 @@ else
 
         # Build/Update package
         fakeroot dpkg-deb --build debian output
+        fakeroot dpkg-deb --build debian
+        mv debian.deb output/latest/cjdns-$ARCH.deb
 
         # Next arch in list
         shift
