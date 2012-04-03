@@ -5,6 +5,9 @@ ARCH := $(shell cat scripts/arch)
 all : scripts/version
 	scripts/mkpackage.sh
 
+rebuild : all
+	scripts/rebuild.sh
+
 control : scripts/version scripts/arch
 	sed "s/VERSION/Version: $(VERSION)/" < scripts/control_template | \
 	sed "s/ARCH/Architecture: $(ARCH)/" > debian/DEBIAN/control
