@@ -2,6 +2,12 @@
 
 This is the behind-the-scenes place where ill-paid grunka lunkas, when not warning people about secret ingredients and armed guards, make Debian packages of [cjdns](https://github.com/cjdelisle/cjdns/). While the author of this repository generally only uses it to make i386 packages, in theory it can be used on any architecture.
 
+## WARNING TO USERS
+
+This project is not CJDNS. It's software to make .deb packages of CJDNS, and contains some output packages so that we can use github as a CDN to download from, but it's not CJDNS, and the prebuilt copy is very unlikely to be up-to-date.
+
+The creator of the CJDNS-deb project, Campadrenalin (Philip Horger), is currently looking for people willing to keep this project up to date elsewhere (or even if they don't want to be the main source of updates, at least send in pull requests to me when they do update). There's not much point to the prebuilt packages if they haven't been updated in a month, and CJDNS is a fast-moving target. Anyone who wants to become an official maintainer should create a fork and let this author know.
+
 ## Using this thing to make your own cjdns packages
 
 It's up to you to compile a copy of cjdroute for your architecture. When that's done, stick it in bin/$ARCH/, where you've substituted $ARCH for the relevant Debian architecture. Then run "make" at the top level of this repository, and it will create a .deb for every architecture in bin.
