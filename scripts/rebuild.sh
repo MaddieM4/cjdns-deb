@@ -15,6 +15,13 @@ make test
 REVISION="`git log cjdns-0.3..master --oneline | wc -l`"
 
 cd ../../cjdns-deb
+
+OLDREVISION=`cat scripts/release`
+if [ "$REVISION" = "$OLDREVISION" ]; then
+    echo "No revision increase, cancelling rest of rebuild."
+    exit
+fi
+
 echo $REVISION > scripts/release
 cp ../cjdns/build/cjdroute bin/i386
 make
