@@ -1,12 +1,10 @@
-## What is this?
+# WARNING TO USERS - PROJECT IS OFFICIALLY DISCONTINUED
 
-This is the behind-the-scenes place where ill-paid grunka lunkas, when not warning people about secret ingredients and armed guards, make Debian packages of [cjdns](https://github.com/cjdelisle/cjdns/). While the author of this repository generally only uses it to make i386 packages, in theory it can be used on any architecture.
+This software was originally used to aid the difficult process of compiling and installing cjdroute. This isn't exactly a tough thing anymore, as the CJDNS community has made great strides in usability that render this package obsolete. If you want to make CJDNS packages, you _should not use this software._ You should be using [checkinstall](https://en.wikipedia.org/wiki/CheckInstall).
 
-## WARNING TO USERS
+That said, I'm leaving the project up here (though I'm stopping the build bot) so that I can, at some later date, reuse the code in a more general packaging project, or at least use this code as inspiration. It'll mostly likely be a thin buildbot-y wrapper for a "remote pull, recompile, remake package with checkinstall, push package" workflow. Until that's done, I'm leaving this up as reference and for historical reasons - and that includes everything in the README below the line.
 
-This project is not CJDNS. It's software to make .deb packages of CJDNS, and contains some output packages so that we can use github as a CDN to download from, but it's not CJDNS, and the prebuilt copy is very unlikely to be up-to-date.
-
-The creator of the CJDNS-deb project, Campadrenalin (Philip Horger), is currently looking for people willing to keep this project up to date elsewhere (or even if they don't want to be the main source of updates, at least send in pull requests to me when they do update). There's not much point to the prebuilt packages if they haven't been updated in a month, and CJDNS is a fast-moving target. Anyone who wants to become an official maintainer should create a fork and let this author know.
+-----------------
 
 ## Using this thing to make your own cjdns packages
 
